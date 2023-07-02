@@ -2,7 +2,7 @@
 import sys
 MAGIC=10
 
-def factorize(num, p):
+def factorize(num):
     global MAGIC
     fp = open("./pi.txt","r")
     fp.read(2)
@@ -21,3 +21,4 @@ def factorize(num, p):
     fp.close()
 
 num=str(sys.argv[1])
+factorize(num)
