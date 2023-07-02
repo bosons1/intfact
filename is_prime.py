@@ -56,9 +56,12 @@ def primality_test(num):
             truth_value = 1
         if truth_value != initial_truth_value:
             print([d1, d2])
-            if d1 == d2:
+            if d1 == d2 and d1 % 2 == 1:
                 m.close()
                 return True
+            elif d1 == d2 and d1 % 2 == 0:
+                m.close()
+                return False
             elif abs(d1-d2) == 1:
                 m.close()
                 return False
