@@ -25,17 +25,19 @@ def decide(num, magic, p):
     fp.close()
     return pos
 
-def determine_pinch_off(num):
+def primality_test(num):
     m = open("zeros2.txt","r")
     line = m.readline()
     magic = int(line.rstrip())
-    print(magic)
     d1 = decide(num, magic, 0)
     d2 = decide(num, magic, 1)
     initial_truth_value = False
     if d1 < d2:
-        initial_truth_value = True
-    print(d1, d2)
+        initial_truth_value = 0
+    elif d1 == d2:
+        initial_truth_value = 2
+    elif d1 > d2:
+        initial_truth_value = 1
     line = ""
     while True:
         line = m.readline()
@@ -43,15 +45,30 @@ def determine_pinch_off(num):
             print("Out of Zeros")
             sys.exit(4)
         magic = int(line.rstrip())
-        print(magic)
         d1 = decide(num, magic, 0)
         d2 = decide(num, magic, 1)
         truth_value = False
         if d1 < d2:
-            truth_value = True
+            truth_value = 0
+        elif d1 == d2:
+            truth_value = 2
+        elif d1 > d2:
+            truth_value = 1
         if truth_value != initial_truth_value:
-            print(d1, d2)
-            break
-        print(d1, d2)
+            if d1 == d2:
+                m.close()
+                return True
+            elif abs(d1 - d2) == 1:
+                m.close()
+                return False
+            initial_truth_value = truth_value
     m.close()
-    return d1, d2
+    return None
+
+num = str(sys.argv[1])
+rnum = num[::-1]
+is_prime = primality_test(rnum)
+if is_prime:
+    print(num + " is a Prime Number")
+else:
+    print(num + " is a Composite Number")
